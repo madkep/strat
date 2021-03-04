@@ -54,7 +54,7 @@ class ADX_15M_USDT2(IStrategy):
             (
                     (dataframe['adx'] > 91) &
                     # (dataframe['minus_di'] > 22) &
-                    (dataframe['sell-minus-di'] > 91) &
+                    (dataframe['sell-minus_di'] > 91) &
                     #(dataframe['plus_di'] > 24) &
                     (qtpylib.crossed_above(dataframe['sell-plus_di'], dataframe['sell-minus_di']))
 
