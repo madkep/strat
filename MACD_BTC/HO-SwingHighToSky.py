@@ -31,7 +31,8 @@ class HOSwingHighToSky(IHyperOpt):
     @staticmethod
     def populate_indicators(dataframe: DataFrame, metadata: dict) -> DataFrame:
 
-        macd = ta.MACD(dataframe)
+        macd = ta.MACD(dataframe, fastperiod=24, slowperiod=56, signalperiod=11)
+        dataframe['macdhist'] = macd['macdhist']
         dataframe['macd'] = macd['macd']
         dataframe['macdsignal'] = macd['macdsignal']
         
