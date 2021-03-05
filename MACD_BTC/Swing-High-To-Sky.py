@@ -50,8 +50,8 @@ class SwingHighToSky(IStrategy):
         ### Add timeperiod from hyperopt (replace xx with value):
         ### "xx" must be replaced even before the first hyperopt is run,
         ### else "xx" would be a syntax error because it must be a Integer value.
-        dataframe['cci-buy'] = ta.CCI(dataframe, timeperiod=xx)
-        dataframe['cci-sell'] = ta.CCI(dataframe, timeperiod=xx)
+        dataframe['cci-buy'] = ta.CCI(dataframe, timeperiod=35)
+        dataframe['cci-sell'] = ta.CCI(dataframe, timeperiod=62)
 
         return dataframe
 
