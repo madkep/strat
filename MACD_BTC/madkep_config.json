@@ -1,17 +1,18 @@
 {
-    "max_open_trades": 1,
+    "max_open_trades": -1,
     "stake_currency": "USDT",
-    "stake_amount": "unlimited",
+    "stake_amount": "50",
     "tradable_balance_ratio": 0.95,
     "amount_reserve_percent": 0.05,
     "fiat_display_currency": "USD",
     "timeframe": "30m",
-    "dry_run": false,
-	"db_url": "sqlite:///tradesv3.sqlite",
+    "dry_run": true,
+    "dry_run_wallet": 350,
+    "amend_last_stake_amount": true,
     "cancel_open_orders_on_exit": true,
     "unfilledtimeout": {
         "buy": 10,
-        "sell": 5
+        "sell": 30
     },
     "bid_strategy": {
 		"price_side": "ask",
@@ -46,7 +47,23 @@
             "rateLimit": 500
         },
         "pair_whitelist": [
-            "BTC/USDT"   
+            "BTC/USDT",
+            "ETH/USDT",
+            "ADA/USDT",
+            "BNB/USDT",
+            "ENJ/USDT",
+            "HNT/USDT",
+            "IOTA/USDT",
+            "OXT/USDT",
+            "TFUEL/USDT",
+            "THETA/USDT",
+            "UNI/USDT",
+            "UTK/USDT",
+            "XLM/USDT",
+            "XVS/USDT",
+            "AAVE/USDT",
+            "AXS/USDT",
+            "LINK/USDT"
         ]
     },
     "pairlists": [
