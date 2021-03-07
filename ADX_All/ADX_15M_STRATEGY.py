@@ -42,7 +42,7 @@ class ADX_15M_USDT(IStrategy):
             (
                     (dataframe['adx'] > 16) &
                     (dataframe['minus_di'] > 4) &
-                    # (dataframe['plus_di'] > 33) &
+                    (dataframe['plus_di'] > 20) &
                     (qtpylib.crossed_above(dataframe['minus_di'], dataframe['plus_di']))
 
             ),
@@ -53,8 +53,8 @@ class ADX_15M_USDT(IStrategy):
         dataframe.loc[
             (
                     (dataframe['adx'] > 43) &
-                    # (dataframe['minus_di'] > 22) &
-                    (dataframe['plus_di'] > 24) &
+                    (dataframe['minus_di'] > 22) &
+                    (dataframe['plus_di'] > 20) &
                     (qtpylib.crossed_above(dataframe['sell-plus_di'], dataframe['sell-minus_di']))
 
             ),
