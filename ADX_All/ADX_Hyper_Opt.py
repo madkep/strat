@@ -44,7 +44,7 @@ class ADXDIOPT(IHyperOpt):
             # TRIGGERS
             if 'trigger' in params:
                 if params['trigger'] == 'buy_signal':
-                    conditions.append(qtpylib.crossed_above(dataframe['minus_di'], dataframe['plus_di']))
+                    conditions.append(qtpylib.crossed_above(dataframe['plus_di'],dataframe['minus_di']))
 
             # Check that the candle had volume
             conditions.append(dataframe['volume'] > 0)
@@ -66,8 +66,10 @@ class ADXDIOPT(IHyperOpt):
         return [
             Integer(0, 100, name='adx-value'),
             Integer(0, 100, name='minus_di-value'),
+            Integer(0, 100, name='plus_di-value'),
             Categorical([True, False], name='adx-enabled'),
             Categorical([True, False], name='minus_di-enabled'),
+            Categorical([True, False], name='plus_di-enabled'),
             Categorical(['buy_signal'], name='trigger')
         ]
 
@@ -97,7 +99,7 @@ class ADXDIOPT(IHyperOpt):
             if 'sell-trigger' in params:
 
                 if params['sell-trigger'] == 'sell_signal':
-                    conditions.append(qtpylib.crossed_above(dataframe['plus_di'], dataframe['minus_di']))
+                    conditions.append(qtpylib.crossed_above(dataframe['sell-minus_di'], dataframe['sell-plus_di']))
 
             # Check that the candle had volume
             conditions.append(dataframe['volume'] > 0)
@@ -119,8 +121,10 @@ class ADXDIOPT(IHyperOpt):
         return [
             Integer(0, 100, name='sell-adx-value'),
             Integer(0, 100, name='sell-minus_di-value'),
+            Integer(0, 100, name='sell-plus_di-value'),
             Categorical([True, False], name='sell-adx-enabled'),
             Categorical([True, False], name='sell-minus_di-enabled'),
+            Categorical([True, False], name='sell-plus_di-enabled'),
             Categorical(['sell_signal'], name='sell-trigger')
         ]
 
@@ -130,7 +134,7 @@ class ADXDIOPT(IHyperOpt):
                     (dataframe['adx'] > 16) &
                     (dataframe['minus_di'] > 4) &
                     (dataframe['plus_di'] > 20) &
-                    (qtpylib.crossed_above(dataframe['minus_di'], dataframe['plus_di']))
+                    (qtpylib.crossed_above(dataframe['plus_di'],dataframe['minus_di']))
  
             ),
             'buy'] = 1
@@ -142,7 +146,7 @@ class ADXDIOPT(IHyperOpt):
                     (dataframe['adx'] > 43) &
                     (dataframe['minus_di'] > 22) &
                     (dataframe['plus_di'] > 20) &
-                    (qtpylib.crossed_above(dataframe['sell-plus_di'], dataframe['sell-minus_di']))
+                    (qtpylib.crossed_above(dataframe['sell-minus_di'], dataframe['sell-plus_di']))
  
             ),
             'sell'] = 1
