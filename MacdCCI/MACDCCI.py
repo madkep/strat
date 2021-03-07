@@ -18,8 +18,8 @@ __maintainer__  = "Kevin Ossenbrück"
 __email__       = "kevin.ossenbrueck@pm.de"
 __status__      = "Live"
 
-class_name = 'SwingHighToSky'
-class SwingHighToSky(IStrategy):
+class_name = 'MACDCCI'
+class MACDCCI(IStrategy):
 
     # Disable ROI
     # Could be replaced with new ROI from hyperopt.
@@ -43,15 +43,16 @@ class SwingHighToSky(IStrategy):
 
     def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         
-        macd = ta.MACD(dataframe)
+        macd = ta.MACD(dataframe, fastperiod=24, slowperiod=56, signalperiod=12)
         dataframe['macd'] = macd['macd']
         dataframe['macdsignal'] = macd['macdsignal']
+        dataframe['macdhist'] = macd['macdhist']
         
         ### Add timeperiod from hyperopt (replace xx with value):
         ### "xx" must be replaced even before the first hyperopt is run,
         ### else "xx" would be a syntax error because it must be a Integer value.
-        dataframe['cci-buy'] = ta.CCI(dataframe, timeperiod=xx)
-        dataframe['cci-sell'] = ta.CCI(dataframe, timeperiod=xx)
+        dataframe['cci-buy'] = ta.CCI(dataframe, timeperiod=35)
+        dataframe['cci-sell'] = ta.CCI(dataframe, timeperiod=62)
 
         return dataframe
 
