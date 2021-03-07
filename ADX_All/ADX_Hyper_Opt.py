@@ -38,6 +38,9 @@ class ADXDIOPT(IHyperOpt):
             if params.get('minus-enabled'):
                 conditions.append(dataframe['minus_di'] > params['minus_di-value'])
 
+            if params.get('plus-enabled'):
+                conditions.append(dataframe['plus_di'] > params['plus_di-value'])
+
             # TRIGGERS
             if 'trigger' in params:
                 if params['trigger'] == 'buy_signal':
@@ -86,6 +89,9 @@ class ADXDIOPT(IHyperOpt):
 
             if params.get('sell-minus-enabled'):
                 conditions.append(dataframe['sell-minus_di'] > params['sell-minus_di-value'])
+
+            if params.get('sell-plus-enabled'):
+                conditions.append(dataframe['sell-plus_di'] > params['sell-plus_di-value'])
 
             # TRIGGERS
             if 'sell-trigger' in params:
