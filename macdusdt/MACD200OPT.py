@@ -13,7 +13,7 @@ class MACD200OPT(IHyperOpt):
     @staticmethod
     def populate_indicators(dataframe: DataFrame, metadata: dict) -> DataFrame:
         dataframe['ema200'] = ta.EMA(dataframe, timeperiod=200)
-        macd = ta.MACD(dataframe)
+        macd = ta.MACD(dataframe, fastperiod=24, slowperiod=56, signalperiod=6)
         dataframe['macd'] = macd['macd']
         dataframe['macdsignal'] = macd['macdsignal']
         dataframe['macdhist'] = macd['macdhist']
