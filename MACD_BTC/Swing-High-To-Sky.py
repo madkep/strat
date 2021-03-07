@@ -31,7 +31,7 @@ class SwingHighToSky(IStrategy):
   
     ### Do extra hyperopt for trailing seperat. Use "--spaces default" and then "--spaces trailing".
     ### See here for more information: https://www.freqtrade.io/en/latest/hyperopt
-    trailing_stop = False
+    trailing_stop = True
     trailing_stop_positive = 0.08
     trailing_stop_positive_offset = 0.10
     trailing_only_offset_is_reached = True
@@ -62,7 +62,7 @@ class SwingHighToSky(IStrategy):
             (
                 (dataframe['macd'] > dataframe['macdsignal']) &
                 (dataframe['cci-buy'] <= -100.0) & 
-                (qtpylib.crossed_above(dataframe['macd'], dataframe['macdsignal'].rolling(5).min()))
+                (qtpylib.crossed_above(dataframe['macd'], dataframe['macdsignal']))
             ),
             'buy'] = 1
 
@@ -73,8 +73,8 @@ class SwingHighToSky(IStrategy):
         dataframe.loc[
             ( 
                 (dataframe['macd'] < dataframe['macdsignal']) & 
-                (dataframe['cci-sell'] >= 200.0) &
-                (qtpylib.crossed_below(dataframe['macd'], dataframe['macdsignal'].rolling(2).max())) 
+                (dataframe['cci-sell'].rolling(8).max() >= 200.0) &
+                (qtpylib.crossed_below(dataframe['macd'], dataframe['macdsignal'])) 
             ),
             'sell'] = 1
             
