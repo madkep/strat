@@ -30,9 +30,7 @@ class HOSwingHighToSky(IHyperOpt):
 
     @staticmethod
     def populate_indicators(dataframe: DataFrame, metadata: dict) -> DataFrame:
-        dataframe['ema7'] = ta.EMA(dataframe, timeperiod=7)
-        dataframe['ema14'] = ta.EMA(dataframe, timeperiod=14)
-        macd = ta.MACD(dataframe, fastperiod=24, slowperiod=56, signalperiod=11)
+        macd = ta.MACD(dataframe, fastperiod=24, slowperiod=56, signalperiod=12)
         dataframe['macdhist'] = macd['macdhist']
         dataframe['macd'] = macd['macd']
         dataframe['macdsignal'] = macd['macdsignal']
@@ -62,7 +60,6 @@ class HOSwingHighToSky(IHyperOpt):
                         conditions.append(dataframe[cciName] < params["buy-cci-value"])
                         conditions.append(dataframe['macd'] > dataframe['macdsignal'])
                         conditions.append(dataframe['volume'] > 0)
-                        conditions.append(dataframe['ema7'] > dataframe['ema14'])
                         conditions.append(qtpylib.crossed_above(dataframe['macd'], dataframe['macdsignal']))
                 
             if conditions:

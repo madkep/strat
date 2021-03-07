@@ -42,9 +42,8 @@ class SwingHighToSky(IStrategy):
         return []
 
     def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
-        dataframe['ema7'] = ta.EMA(dataframe, timeperiod=7)
-        dataframe['ema14'] = ta.EMA(dataframe, timeperiod=14)
-        macd = ta.MACD(dataframe, fastperiod=24, slowperiod=56, signalperiod=11)
+
+        macd = ta.MACD(dataframe, fastperiod=24, slowperiod=56, signalperiod=12)
         dataframe['macdhist'] = macd['macdhist']
         dataframe['macd'] = macd['macd']
         dataframe['macdsignal'] = macd['macdsignal']
@@ -63,7 +62,6 @@ class SwingHighToSky(IStrategy):
             (
                 (dataframe['macd'] > dataframe['macdsignal']) &
                 (dataframe['cci-buy'] <= -100.0) & 
-                (dataframe['ema7'] > dataframe['ema14'])
                 (qtpylib.crossed_above(dataframe['macd'], dataframe['macdsignal']))
             ),
             'buy'] = 1
