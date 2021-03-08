@@ -18,8 +18,8 @@ __maintainer__  = "Kevin Ossenbrück"
 __email__       = "kevin.ossenbrueck@pm.de"
 __status__      = "Live"
 
-class_name = 'SwingHighToSky'
-class SwingHighToSky(IStrategy):
+class_name = 'MACDCCI2456'
+class MACDCCI2456(IStrategy):
 
     # Disable ROI
     # Could be replaced with new ROI from hyperopt.
@@ -42,11 +42,11 @@ class SwingHighToSky(IStrategy):
         return []
 
     def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
-
-        macd = ta.MACD(dataframe, fastperiod=12, slowperiod=26, signalperiod=9)
-        dataframe['macdhist'] = macd['macdhist']
+        
+        macd = ta.MACD(dataframe, fastperiod=24, slowperiod=56, signalperiod=11)
         dataframe['macd'] = macd['macd']
         dataframe['macdsignal'] = macd['macdsignal']
+        dataframe['macdhist'] = macd['macdhist']
         
         ### Add timeperiod from hyperopt (replace xx with value):
         ### "xx" must be replaced even before the first hyperopt is run,
@@ -61,8 +61,7 @@ class SwingHighToSky(IStrategy):
         dataframe.loc[
             (
                 (dataframe['macd'] > dataframe['macdsignal']) &
-                (dataframe['cci-buy'] <= -100.0) & 
-                (qtpylib.crossed_above(dataframe['macd'], dataframe['macdsignal']))
+                (dataframe['cci-buy'] <= -100.0) # Replace with value from hyperopt.
             ),
             'buy'] = 1
 
@@ -73,8 +72,7 @@ class SwingHighToSky(IStrategy):
         dataframe.loc[
             ( 
                 (dataframe['macd'] < dataframe['macdsignal']) & 
-                (dataframe['cci-sell'].rolling(10).max() >= 200.0) &
-                (qtpylib.crossed_below(dataframe['macd'], dataframe['macdsignal'])) 
+                (dataframe['cci-sell'] >= 200.0) # Replace with value from hyperopt.
             ),
             'sell'] = 1
             

@@ -43,7 +43,7 @@ class MACDCCI(IStrategy):
 
     def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         
-        macd = ta.MACD(dataframe, fastperiod=24, slowperiod=56, signalperiod=12)
+        macd = ta.MACD(dataframe, fastperiod=12, slowperiod=26, signalperiod=9)
         dataframe['macd'] = macd['macd']
         dataframe['macdsignal'] = macd['macdsignal']
         dataframe['macdhist'] = macd['macdhist']

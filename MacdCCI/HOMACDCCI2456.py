@@ -25,12 +25,12 @@ cciValueMin = -400
 cciValueMax = 400
 cciTimeRange = range(cciTimeMin, cciTimeMax)
 
-class_name = 'HOMACDCCI'
-class HOMACDCCI(IHyperOpt):
+class_name = 'HOMACDCCI2456'
+class HOMACDCCI2456(IHyperOpt):
 
     @staticmethod
     def populate_indicators(dataframe: DataFrame, metadata: dict) -> DataFrame:
-        macd = ta.MACD(dataframe, fastperiod=12, slowperiod=26, signalperiod=9)
+        macd = ta.MACD(dataframe, fastperiod=24, slowperiod=56, signalperiod=11)
         dataframe['macd'] = macd['macd']
         dataframe['macdsignal'] = macd['macdsignal']
         

@@ -25,12 +25,13 @@ cciValueMin = -400
 cciValueMax = 400
 cciTimeRange = range(cciTimeMin, cciTimeMax)
 
-class_name = 'HOMACDCCI'
-class HOMACDCCI(IHyperOpt):
+class_name = 'HOSwingHighToSky2456'
+class HOSwingHighToSky2456(IHyperOpt):
 
     @staticmethod
     def populate_indicators(dataframe: DataFrame, metadata: dict) -> DataFrame:
-        macd = ta.MACD(dataframe, fastperiod=12, slowperiod=26, signalperiod=9)
+        macd = ta.MACD(dataframe, fastperiod=24, slowperiod=56, signalperiod=11)
+        dataframe['macdhist'] = macd['macdhist']
         dataframe['macd'] = macd['macd']
         dataframe['macdsignal'] = macd['macdsignal']
         
@@ -59,6 +60,7 @@ class HOMACDCCI(IHyperOpt):
                         conditions.append(dataframe[cciName] < params["buy-cci-value"])
                         conditions.append(dataframe['macd'] > dataframe['macdsignal'])
                         conditions.append(dataframe['volume'] > 0)
+                        conditions.append(qtpylib.crossed_above(dataframe['macd'], dataframe['macdsignal']))
                 
             if conditions:
                 dataframe.loc[reduce(lambda x, y: x & y, conditions), 'buy'] = 1
@@ -99,6 +101,7 @@ class HOMACDCCI(IHyperOpt):
                     if params['sell-trigger'] == cciName:
                         conditions.append(dataframe[cciName] > params["sell-cci-value"])
                         conditions.append(dataframe['macd'] < dataframe['macdsignal'])
+                        conditions.append(qtpylib.crossed_below(dataframe['macd'], dataframe['macdsignal']))
                 
             if conditions:
                 dataframe.loc[reduce(lambda x, y: x & y, conditions), 'sell'] = 1
